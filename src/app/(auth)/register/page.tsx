@@ -343,7 +343,7 @@ export default function RegisterPage() {
                   backgroundImage: "linear-gradient(135deg, #a78bfa, #67e8f9)",
                 }}
               >
-                Sign in
+                Login
               </Link>
             </p>
           </div>

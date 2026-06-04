@@ -92,10 +92,10 @@ function GlowButton({ pending }: { pending: boolean }) {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
               />
             </svg>
-            Signing in…
+            Logging in…
           </>
         ) : (
-          <>Sign in</>
+          <>Login</>
         )}
       </span>
     </button>
@@ -158,7 +158,7 @@ export default function LoginPage() {
                 </span>
               </h1>
               <p className="mt-1.5 text-sm text-white/35 tracking-wide">
-                Sign in to continue your journey
+                Login to continue your journey
               </p>
             </div>
 
@@ -312,7 +312,7 @@ export default function LoginPage() {
                   backgroundImage: "linear-gradient(135deg, #a78bfa, #67e8f9)",
                 }}
               >
-                Create one free
+                Create Account
               </Link>
             </p>
           </div>
