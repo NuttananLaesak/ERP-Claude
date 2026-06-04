@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git --name my-web)",
+      "Bash(cp *)",
+      "Bash(rsync -a --exclude='node_modules' --exclude='.git' /tmp/my-web-init/. \"/mnt/d/myProject/my web/\")",
+      "Bash(npm install *)",
+      "Bash(grep -E \"^\\(next-auth|bcryptjs|@prisma|prisma|zod\\)$\")",
+      "Bash(grep \"^prisma$\")",
+      "Bash(jobs -l)",
+      "Bash(grep -E \"^\\(next-auth|prisma\\)$\")",
+      "Bash(node -e \"const pkg = require\\('/mnt/d/myProject/my web/node_modules/zod/package.json'\\); console.log\\(pkg.version\\)\")",
+      "Bash(node *)",
+      "Bash(npx tsc *)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(node_modules/.bin/prisma generate *)",
+      "Bash(npm run *)",
+      "Bash(node_modules/.bin/prisma migrate *)",
+      "Bash(sed -i 's/style={fu\\(0\\)}/style={S.logo}/g' 's/style={fu\\(120\\) as React\\\\.CSSProperties}/style={S.card}/g' '/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx')",
+      "Bash(sed -i 's/style={fu\\(0\\)}/style={S.logo}/g' \"/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx\")",
+      "Bash(sed -i 's/style={fu\\(120\\) as React\\\\.CSSProperties}/style={S.card}/g' \"/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx\")",
+      "Bash(sed -i 's/style={fu\\(200\\)}/style={S.email}/g' \"/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx\")",
+      "Bash(sed -i 's/style={fu\\(270\\)}/style={S.password}/g' \"/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx\")",
+      "Bash(sed -i 's/import { useActionState, useState, useRef, type CSSProperties } from \"react\";/import { useActionState, useState, useRef, type CSSProperties, type MouseEvent } from \"react\";/' '/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx' '/mnt/d/myProject/my web/src/app/\\(auth\\)/register/page.tsx')",
+      "Bash(sed -i 's/e: React\\\\.MouseEvent<HTMLButtonElement>/e: MouseEvent<HTMLButtonElement>/g' '/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx' '/mnt/d/myProject/my web/src/app/\\(auth\\)/register/page.tsx')",
+      "Bash(npx next *)",
+      "Bash(xargs ls -la)"
+    ]
+  }
+}
