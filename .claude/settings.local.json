@@ -25,7 +25,14 @@
       "Bash(sed -i 's/import { useActionState, useState, useRef, type CSSProperties } from \"react\";/import { useActionState, useState, useRef, type CSSProperties, type MouseEvent } from \"react\";/' '/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx' '/mnt/d/myProject/my web/src/app/\\(auth\\)/register/page.tsx')",
       "Bash(sed -i 's/e: React\\\\.MouseEvent<HTMLButtonElement>/e: MouseEvent<HTMLButtonElement>/g' '/mnt/d/myProject/my web/src/app/\\(auth\\)/login/page.tsx' '/mnt/d/myProject/my web/src/app/\\(auth\\)/register/page.tsx')",
       "Bash(npx next *)",
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(git -C /mnt/d/myProject/my-web status)",
+      "Bash(git -C /mnt/d/myProject/my-web diff)",
+      "Bash(git -C /mnt/d/myProject/my-web add src/app/api/auth/\\\\[...nextauth\\\\]/route.ts)",
+      "Bash(git -C /mnt/d/myProject/my-web commit -m ' *)",
+      "Bash(git -C /mnt/d/myProject/my-web add src/lib/db.ts)",
+      "Bash(git *)",
+      "Bash(vercel --version)"
     ]
   }
 }
