@@ -1,27 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 
-type DbClient = ReturnType<typeof createPrismaClient>;
-
-const globalForPrisma = global as unknown as { prisma: DbClient | undefined };
-
 function createPrismaClient() {
   return new PrismaClient({
     accelerateUrl: process.env.DATABASE_URL,
   }).$extends(withAccelerate());
 }
 
-function getDb(): DbClient {
-  if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = createPrismaClient();
-  }
-  return globalForPrisma.prisma;
-}
+type ExtendedClient = ReturnType<typeof createPrismaClient>;
 
-export const db = new Proxy({} as DbClient, {
-  get(_, prop: string | symbol) {
-    const client = getDb();
-    const value = Reflect.get(client, prop);
-    return typeof value === "function" ? value.bind(client) : value;
-  },
-});
+// Versioned key forces stale HMR-cached clients to be replaced
+const CACHE_KEY = "__prisma_v2__";
+const g = globalThis as unknown as Record<string, ExtendedClient>;
+
+export const db: ExtendedClient =
+  g[CACHE_KEY] ?? (g[CACHE_KEY] = createPrismaClient());

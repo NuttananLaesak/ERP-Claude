@@ -12,6 +12,8 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "prisma db seed",
+    "db:reset": "tsx prisma/seed.ts --clean",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -37,6 +39,7 @@
     "eslint-config-next": "16.2.6",
     "prisma": "^7.8.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }
