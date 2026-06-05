@@ -4,6 +4,11 @@ A web-based ERP system with HR management built on Next.js, Auth.js v5, and Pris
 
 **Live Demo:** [https://nattanan-erp-claude.vercel.app](https://nattanan-erp-claude.vercel.app)
 
+| Role     | Email               | Password      |
+| -------- | ------------------- | ------------- |
+| Demo     | `demo@company.com`  | `password123` |
+| Employee | `alice@company.com` | `password123` |
+
 ---
 
 ## Tech Stack
@@ -105,10 +110,8 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Role     | Email               | Password      |
 | -------- | ------------------- | ------------- |
-| Admin    | `admin@company.com` | `password123` |
-| Admin    | `demo@company.com`  | `password123` |
+| Demo     | `demo@company.com`  | `password123` |
 | Employee | `alice@company.com` | `password123` |
-| Employee | `bob@company.com`   | `password123` |
 
 > All seeded employees use `password123` and have the `EMPLOYEE` role.
 
