@@ -5,10 +5,12 @@ import { StatusBadge } from "@/components/hr/status-badge";
 import { EmployeeAvatar } from "@/components/hr/employee-avatar";
 import { PageGlow } from "@/components/ui/page-glow";
 import { ArrowRightIcon, PeopleIcon } from "@/components/icons";
+import { auth } from "@/auth";
 
 export default async function HrPage() {
-  const [stats, employees] = await Promise.all([getHrStats(), getEmployees()]);
+  const [stats, employees, session] = await Promise.all([getHrStats(), getEmployees(), auth()]);
   const recent = employees.slice(0, 5);
+  const isDemo = session?.user.role === "DEMO";
 
   const cards = [
     {
@@ -46,12 +48,14 @@ export default async function HrPage() {
               </h1>
               <p className="mt-1 text-sm text-white/35">Manage your team</p>
             </div>
-            <Link
-              href="/dashboard/hr/employees/new"
-              className="rounded-xl bg-indigo-500/20 px-4 py-2 text-sm font-medium text-indigo-300 transition-colors hover:bg-indigo-500/30"
-            >
-              + Add Employee
-            </Link>
+            {!isDemo && (
+              <Link
+                href="/dashboard/hr/employees/new"
+                className="rounded-xl bg-indigo-500/20 px-4 py-2 text-sm font-medium text-indigo-300 transition-colors hover:bg-indigo-500/30"
+              >
+                + Add Employee
+              </Link>
+            )}
           </div>
         </AnimatedSection>
 
