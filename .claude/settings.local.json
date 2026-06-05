@@ -37,7 +37,8 @@
       "Bash(npx prisma *)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes, reset the database\" npx prisma *)",
       "Bash(tsx *)",
-      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"update seed all user and 3employee password is password123 then remove all table in db then migrate then seed\" npx prisma *)"
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"update seed all user and 3employee password is password123 then remove all table in db then migrate then seed\" npx prisma *)",
+      "Bash(xargs sed -i -e 's|@/components/dashboard/animated-section|@/components/animated/animated-section|g' -e 's|@/components/dashboard/animated-stats|@/components/animated/animated-stats|g' -e 's|@/components/dashboard/dashboard-grid|@/components/grid/grid|g' -e 's|@/components/dashboard/sidebar|@/components/sidebar/sidebar|g')"
     ]
   }
 }

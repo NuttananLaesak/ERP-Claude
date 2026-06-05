@@ -7,10 +7,30 @@ export default async function HrPage() {
   const recent = employees.slice(0, 5);
 
   const cards = [
-    { label: "Total Employees", value: stats.total, color: "bg-indigo-500/15 text-indigo-400", glowRgb: "99,102,241" },
-    { label: "Active", value: stats.active, color: "bg-emerald-500/15 text-emerald-400", glowRgb: "52,211,153" },
-    { label: "On Leave", value: stats.onLeave, color: "bg-amber-500/15 text-amber-400", glowRgb: "251,191,36" },
-    { label: "Departments", value: stats.departments, color: "bg-sky-500/15 text-sky-400", glowRgb: "56,189,248" },
+    {
+      label: "Total Employees",
+      value: stats.total,
+      color: "bg-indigo-500/15 text-indigo-400",
+      glowRgb: "99,102,241",
+    },
+    {
+      label: "Active",
+      value: stats.active,
+      color: "bg-emerald-500/15 text-emerald-400",
+      glowRgb: "52,211,153",
+    },
+    {
+      label: "On Leave",
+      value: stats.onLeave,
+      color: "bg-amber-500/15 text-amber-400",
+      glowRgb: "251,191,36",
+    },
+    {
+      label: "Inactive",
+      value: stats.inactive,
+      color: "bg-rose-500/15 text-rose-400",
+      glowRgb: "244,63,94",
+    },
   ];
 
   return (
@@ -45,13 +65,25 @@ export default async function HrPage() {
                 key={c.label}
                 className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5"
               >
-                <div className={`mb-3 inline-flex rounded-lg p-2 ${c.color}`}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+                <div className={`mb-3 inline-flex rounded-lg p-2.5 ${c.color}`}>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
                   </svg>
                 </div>
                 <p className="text-xs font-medium text-white/40">{c.label}</p>
-                <p className="mt-1 text-2xl font-semibold tracking-tight text-white/90">{c.value}</p>
+                <p className="mt-1 text-2xl font-semibold tracking-tight text-white/90">
+                  {c.value}
+                </p>
               </div>
             ))}
           </div>
@@ -60,32 +92,67 @@ export default async function HrPage() {
         <AnimatedSection delay={0.1}>
           <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03]">
             <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-4">
-              <h2 className="text-sm font-semibold text-white/70">Recent Employees</h2>
-              <Link href="/dashboard/hr/employees" className="text-xs text-indigo-400 hover:text-indigo-300">
-                View all →
+              <h2 className="text-sm font-semibold text-white/70">
+                Recent Employees
+              </h2>
+              <Link
+                href="/dashboard/hr/employees"
+                className="group flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/50 transition-all hover:border-indigo-500/30 hover:bg-indigo-500/[0.08] hover:text-indigo-300"
+              >
+                View all
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </Link>
             </div>
             {recent.length === 0 ? (
-              <div className="px-6 py-12 text-center text-sm text-white/30">No employees yet</div>
+              <div className="px-6 py-12 text-center text-sm text-white/30">
+                No employees yet
+              </div>
             ) : (
               <div className="divide-y divide-white/[0.04]">
                 {recent.map((emp) => (
-                  <div key={emp.id} className="flex items-center justify-between px-6 py-4">
+                  <div
+                    key={emp.id}
+                    className="flex items-center justify-between px-6 py-4"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500/20 text-xs font-semibold text-indigo-300">
                         {emp.name.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-white/80">{emp.name}</p>
-                        <p className="text-xs text-white/35">{emp.position?.name ?? emp.department.name}</p>
+                        <p className="text-sm font-medium text-white/80">
+                          {emp.name}
+                        </p>
+                        <p className="text-xs text-white/35">
+                          {emp.position?.name ?? emp.department.name}
+                        </p>
                       </div>
                     </div>
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      emp.status === "ACTIVE" ? "bg-emerald-500/15 text-emerald-400" :
-                      emp.status === "ON_LEAVE" ? "bg-amber-500/15 text-amber-400" :
-                      "bg-white/10 text-white/40"
-                    }`}>
-                      {emp.status === "ON_LEAVE" ? "On Leave" : emp.status.charAt(0) + emp.status.slice(1).toLowerCase()}
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                        emp.status === "ACTIVE"
+                          ? "bg-emerald-500/15 text-emerald-400"
+                          : emp.status === "ON_LEAVE"
+                            ? "bg-amber-500/15 text-amber-400"
+                            : "bg-red-500/15 text-red-400"
+                      }`}
+                    >
+                      {emp.status === "ON_LEAVE"
+                        ? "On Leave"
+                        : emp.status.charAt(0) +
+                          emp.status.slice(1).toLowerCase()}
                     </span>
                   </div>
                 ))}

@@ -227,7 +227,7 @@ export async function getHrStats() {
     db.department.count(),
     db.position.count(),
   ]);
-  return { total, active, onLeave, departments, positions };
+  return { total, active, onLeave, inactive: total - active - onLeave, departments, positions };
 }
 
 export async function createEmployeeLogin(id: string) {

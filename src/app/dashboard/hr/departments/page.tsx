@@ -12,7 +12,7 @@ export default async function DepartmentsPage() {
         <div className="absolute -right-60 -top-60 h-[500px] w-[500px] rounded-full bg-indigo-600/[0.07] blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-3xl">
+      <div className="relative">
         <AnimatedSection delay={0}>
           <div className="mb-8">
             <div className="mb-1 flex items-center gap-2 text-xs text-white/35">
