@@ -4,9 +4,9 @@ import {
   getEmployee,
   getDepartments,
   getPositions,
-  deleteEmployee,
   updateEmployeeStatus,
 } from "@/actions/hr";
+import { DeleteEmployeeButton } from "@/components/hr/delete-employee-button";
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { EditEmployeeForm } from "@/components/hr/edit-employee-form";
 import { CreateLoginButton } from "@/components/hr/create-login-button";
@@ -124,14 +124,10 @@ export default async function EmployeeDetailPage({
                     </button>
                   </form>
                 )}
-                <form action={deleteEmployee.bind(null, employee.id)}>
-                  <button
-                    type="submit"
-                    className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/20"
-                  >
-                    Delete
-                  </button>
-                </form>
+                <DeleteEmployeeButton
+                  id={employee.id}
+                  className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/20 disabled:opacity-50"
+                />
               </div>
             </div>
           </div>

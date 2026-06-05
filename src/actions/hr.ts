@@ -91,6 +91,7 @@ const employeeSchema = z.object({
   status: z.enum(["ACTIVE", "INACTIVE", "ON_LEAVE"]).default("ACTIVE"),
   hireDate: z.string().min(1, "Hire date required"),
   salary: z.string().optional(),
+  password: z.string().min(6, "Password min 6 characters").optional(),
 });
 
 function generateEmployeeId(): string {
@@ -108,6 +109,7 @@ export async function createEmployee(_: unknown, formData: FormData) {
     status: formData.get("status") || "ACTIVE",
     hireDate: formData.get("hireDate"),
     salary: formData.get("salary") || undefined,
+    password: (formData.get("password") as string) || undefined,
   });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
@@ -122,17 +124,18 @@ export async function createEmployee(_: unknown, formData: FormData) {
   const emailInUse = await db.user.findUnique({ where: { email: parsed.data.email } });
   if (emailInUse) return { error: "Email already in use by an existing account" };
 
-  const hashedPass = await bcrypt.hash(employeeId, 12);
+  const hashedPass = await bcrypt.hash(parsed.data.password ?? employeeId, 12);
   const user = await db.user.create({
     data: { email: parsed.data.email, name: parsed.data.name, password: hashedPass, role: "EMPLOYEE" },
   });
 
+  const { password: _pw, salary, hireDate, ...employeeFields } = parsed.data;
   await db.employee.create({
     data: {
-      ...parsed.data,
+      ...employeeFields,
       employeeId,
-      hireDate: new Date(parsed.data.hireDate),
-      salary: parsed.data.salary ? parseFloat(parsed.data.salary) : null,
+      hireDate: new Date(hireDate),
+      salary: salary ? parseFloat(salary) : null,
       userId: user.id,
     },
   });
@@ -182,7 +185,9 @@ export async function updateEmployeeStatus(id: string, status: "ACTIVE" | "INACT
 }
 
 export async function deleteEmployee(id: string): Promise<void> {
+  const employee = await db.employee.findUnique({ where: { id }, select: { userId: true } });
   await db.employee.delete({ where: { id } });
+  if (employee?.userId) await db.user.delete({ where: { id: employee.userId } });
   revalidatePath("/dashboard/hr/employees");
   revalidatePath("/dashboard/hr");
   redirect("/dashboard/hr/employees");

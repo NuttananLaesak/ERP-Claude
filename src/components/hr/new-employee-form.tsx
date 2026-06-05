@@ -101,6 +101,12 @@ export function NewEmployeeForm({
           <label className={labelCls}>Salary (optional)</label>
           <input name="salary" type="number" min="0" step="0.01" placeholder="75000" className={inputCls} />
         </div>
+
+        <div className="col-span-2">
+          <label className={labelCls}>Password (optional)</label>
+          <input name="password" type="password" minLength={6} placeholder="Leave blank to use employee ID" className={inputCls} />
+          <p className="mt-1.5 text-xs text-white/25">If blank, employee ID is set as default password.</p>
+        </div>
       </div>
 
       {departments.length === 0 && (

@@ -4,7 +4,7 @@ import { authConfig } from "./auth.config";
 
 const { auth } = NextAuth(authConfig);
 
-const PUBLIC_PATHS = ["/login", "/register", "/api/auth"];
+const PUBLIC_PATHS = ["/login", "/api/auth"];
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
@@ -17,7 +17,7 @@ export default auth((req) => {
   if (req.auth) {
     const role = (req.auth.user as any)?.role ?? "ADMIN";
 
-    if (pathname === "/login" || pathname === "/register") {
+    if (pathname === "/login") {
       const dest = role === "EMPLOYEE" ? "/dashboard/employee" : "/dashboard";
       return NextResponse.redirect(new URL(dest, req.url));
     }

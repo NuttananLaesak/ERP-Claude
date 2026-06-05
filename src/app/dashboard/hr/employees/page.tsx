@@ -1,9 +1,9 @@
 import Link from "next/link";
 import {
   getEmployees,
-  deleteEmployee,
   updateEmployeeStatus,
 } from "@/actions/hr";
+import { DeleteEmployeeButton } from "@/components/hr/delete-employee-button";
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { StatusBadge } from "@/components/hr/status-badge";
 import { EmployeeAvatar } from "@/components/hr/employee-avatar";
@@ -149,14 +149,10 @@ export default async function EmployeesPage() {
                                 </button>
                               </form>
                             )}
-                            <form action={deleteEmployee.bind(null, emp.id)}>
-                              <button
-                                type="submit"
-                                className="rounded-lg px-2 py-1 text-xs text-red-400 hover:bg-red-500/10"
-                              >
-                                Delete
-                              </button>
-                            </form>
+                            <DeleteEmployeeButton
+                              id={emp.id}
+                              className="rounded-lg px-2 py-1 text-xs text-red-400 hover:bg-red-500/10 disabled:opacity-50"
+                            />
                           </div>
                         </td>
                       </tr>

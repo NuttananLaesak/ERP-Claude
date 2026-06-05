@@ -9,14 +9,11 @@ import {
 } from "react";
 import { login } from "@/actions/auth";
 import { TiltCard } from "@/components/ui/tilt-card";
-import Link from "next/link";
-
 const S: Record<string, CSSProperties> = {
   card: { animation: "fade-up .55s ease-out 100ms both" },
   email: { animation: "fade-up .55s ease-out 190ms both" },
   password: { animation: "fade-up .55s ease-out 260ms both" },
   button: { animation: "fade-up .55s ease-out 330ms both" },
-  footer: { animation: "fade-up .55s ease-out 400ms both" },
 };
 
 function GlowButton({ pending }: { pending: boolean }) {
@@ -282,39 +279,6 @@ export default function LoginPage() {
               </div>
             </form>
 
-            <div className="mt-6 flex items-center gap-3">
-              <div
-                className="h-px flex-1"
-                style={{
-                  background:
-                    "linear-gradient(90deg, transparent, rgba(255,255,255,.08))",
-                }}
-              />
-              <span className="text-xs text-white/20">or</span>
-              <div
-                className="h-px flex-1"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgba(255,255,255,.08), transparent)",
-                }}
-              />
-            </div>
-
-            <p
-              className="mt-4 text-center text-sm text-white/30"
-              style={S.footer}
-            >
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/register"
-                className="font-semibold text-transparent bg-clip-text hover:opacity-80 transition-opacity"
-                style={{
-                  backgroundImage: "linear-gradient(135deg, #a78bfa, #67e8f9)",
-                }}
-              >
-                Create Account
-              </Link>
-            </p>
           </div>
         </div>
       </TiltCard>
