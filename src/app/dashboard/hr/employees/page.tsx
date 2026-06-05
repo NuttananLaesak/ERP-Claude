@@ -5,27 +5,16 @@ import {
   updateEmployeeStatus,
 } from "@/actions/hr";
 import { AnimatedSection } from "@/components/animated/animated-section";
-
-const statusColors: Record<string, string> = {
-  ACTIVE: "bg-emerald-500/15 text-emerald-400",
-  INACTIVE: "bg-red-500/10 text-red-400",
-  ON_LEAVE: "bg-amber-500/15 text-amber-400",
-};
-
-const statusLabels: Record<string, string> = {
-  ACTIVE: "Active",
-  INACTIVE: "Inactive",
-  ON_LEAVE: "On Leave",
-};
+import { StatusBadge } from "@/components/hr/status-badge";
+import { EmployeeAvatar } from "@/components/hr/employee-avatar";
+import { PageGlow } from "@/components/ui/page-glow";
 
 export default async function EmployeesPage() {
   const employees = await getEmployees();
 
   return (
     <div className="relative min-h-screen p-6 pt-16 md:p-8 md:pt-8">
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -right-60 -top-60 h-[500px] w-[500px] rounded-full bg-indigo-600/[0.07] blur-3xl" />
-      </div>
+      <PageGlow />
 
       <div className="relative">
         <AnimatedSection delay={0}>
@@ -97,13 +86,11 @@ export default async function EmployeesPage() {
                         <td className="px-6 py-4">
                           <Link
                             href={`/dashboard/hr/employees/${emp.id}`}
-                            className="flex items-center gap-3 group/row"
+                            className="group/row flex items-center gap-3"
                           >
-                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500/20 text-xs font-semibold text-indigo-300">
-                              {emp.name.charAt(0).toUpperCase()}
-                            </div>
+                            <EmployeeAvatar name={emp.name} />
                             <div>
-                              <p className="text-sm font-medium text-white/80 group-hover/row:text-white/95 transition-colors">
+                              <p className="text-sm font-medium text-white/80 transition-colors group-hover/row:text-white/95">
                                 {emp.name}
                               </p>
                               <p className="text-xs text-white/35">
@@ -119,11 +106,7 @@ export default async function EmployeesPage() {
                           {emp.position?.name ?? "—"}
                         </td>
                         <td className="px-6 py-4">
-                          <span
-                            className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[emp.status]}`}
-                          >
-                            {statusLabels[emp.status]}
-                          </span>
+                          <StatusBadge status={emp.status as "ACTIVE" | "INACTIVE" | "ON_LEAVE"} />
                         </td>
                         <td className="px-6 py-4 text-sm text-white/40">
                           {new Date(emp.hireDate).toLocaleDateString("en-US", {

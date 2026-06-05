@@ -10,18 +10,9 @@ import {
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { EditEmployeeForm } from "@/components/hr/edit-employee-form";
 import { CreateLoginButton } from "@/components/hr/create-login-button";
-
-const statusColors: Record<string, string> = {
-  ACTIVE: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-  INACTIVE: "bg-white/10 text-white/40 border-white/10",
-  ON_LEAVE: "bg-amber-500/15 text-amber-400 border-amber-500/20",
-};
-
-const statusLabels: Record<string, string> = {
-  ACTIVE: "Active",
-  INACTIVE: "Inactive",
-  ON_LEAVE: "On Leave",
-};
+import { StatusBadge } from "@/components/hr/status-badge";
+import { EmployeeAvatar } from "@/components/hr/employee-avatar";
+import { PageGlow } from "@/components/ui/page-glow";
 
 export default async function EmployeeDetailPage({
   params,
@@ -45,12 +36,9 @@ export default async function EmployeeDetailPage({
 
   return (
     <div className="relative min-h-screen p-6 pt-16 md:p-8 md:pt-8">
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -right-60 -top-60 h-[500px] w-[500px] rounded-full bg-indigo-600/[0.07] blur-3xl" />
-      </div>
+      <PageGlow />
 
       <div className="relative mx-auto max-w-3xl">
-        {/* Header */}
         <AnimatedSection delay={0}>
           <div className="mb-8">
             <div className="mb-3 flex items-center gap-2 text-xs text-white/35">
@@ -70,9 +58,7 @@ export default async function EmployeeDetailPage({
 
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-500/20 text-xl font-semibold text-indigo-300">
-                  {employee.name.charAt(0).toUpperCase()}
-                </div>
+                <EmployeeAvatar name={employee.name} size="lg" />
                 <div>
                   <h1 className="bg-gradient-to-br from-white/90 to-white/50 bg-clip-text text-2xl font-semibold text-transparent">
                     {employee.name}
@@ -81,16 +67,14 @@ export default async function EmployeeDetailPage({
                     <span className="text-xs text-white/35">
                       {employee.employeeId}
                     </span>
-                    <span
-                      className={`rounded-full border px-2 py-0.5 text-xs font-medium ${statusColors[employee.status]}`}
-                    >
-                      {statusLabels[employee.status]}
-                    </span>
+                    <StatusBadge
+                      status={employee.status as "ACTIVE" | "INACTIVE" | "ON_LEAVE"}
+                      border
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* Quick status actions */}
               <div className="flex items-center gap-2">
                 {employee.status !== "ACTIVE" && (
                   <form
@@ -153,7 +137,6 @@ export default async function EmployeeDetailPage({
           </div>
         </AnimatedSection>
 
-        {/* Info cards */}
         <AnimatedSection delay={0.04}>
           <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
@@ -184,7 +167,6 @@ export default async function EmployeeDetailPage({
           </div>
         </AnimatedSection>
 
-        {/* Contact row */}
         <AnimatedSection delay={0.07}>
           <div className="mb-6 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-4">
             <div className="flex flex-wrap gap-6 text-sm">
@@ -210,7 +192,6 @@ export default async function EmployeeDetailPage({
           </div>
         </AnimatedSection>
 
-        {/* Login status */}
         <AnimatedSection delay={0.09}>
           <div className="mb-6 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5">
             <p className="mb-3 text-xs font-medium uppercase tracking-widest text-white/25">
@@ -238,7 +219,6 @@ export default async function EmployeeDetailPage({
           </div>
         </AnimatedSection>
 
-        {/* Edit form */}
         <AnimatedSection delay={0.12}>
           <p className="mb-3 text-xs font-medium text-white/35">Edit Details</p>
           <EditEmployeeForm
