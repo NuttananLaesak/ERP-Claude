@@ -8,15 +8,15 @@ A web-based ERP system with HR management built on Next.js, Auth.js v5, and Pris
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Auth | Auth.js v5 (next-auth beta) |
-| Database | PostgreSQL via Prisma Accelerate |
-| ORM | Prisma 7 |
-| Styling | Tailwind CSS v4 |
-| Language | TypeScript |
-| Deploy | Vercel |
+| Layer     | Technology                       |
+| --------- | -------------------------------- |
+| Framework | Next.js 16 (App Router)          |
+| Auth      | Auth.js v5 (next-auth beta)      |
+| Database  | PostgreSQL via Prisma Accelerate |
+| ORM       | Prisma 7                         |
+| Styling   | Tailwind CSS v4                  |
+| Language  | TypeScript                       |
+| Deploy    | Vercel                           |
 
 ---
 
@@ -43,8 +43,11 @@ A web-based ERP system with HR management built on Next.js, Auth.js v5, and Pris
 ### 1. Clone the repo
 
 ```bash
-git clone <repo-url>
-cd my-web
+git clone https://github.com/NuttananLaesak/ERP-Claude.git
+```
+
+```bash
+cd ERP-Claude
 ```
 
 ### 2. Install dependencies
@@ -100,12 +103,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Demo Accounts
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@company.com` | `password123` |
-| Admin | `demo@company.com` | `password123` |
+| Role     | Email               | Password      |
+| -------- | ------------------- | ------------- |
+| Admin    | `admin@company.com` | `password123` |
+| Admin    | `demo@company.com`  | `password123` |
 | Employee | `alice@company.com` | `password123` |
-| Employee | `bob@company.com` | `password123` |
+| Employee | `bob@company.com`   | `password123` |
 
 > All seeded employees use `password123` and have the `EMPLOYEE` role.
 
@@ -113,16 +116,16 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start dev server (webpack mode) |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run db:push` | Push schema to database (no migration history) |
-| `npm run db:migrate` | Run pending migrations |
-| `npm run db:seed` | Seed demo data |
-| `npm run db:reset` | Wipe and re-seed the database |
-| `npm run db:studio` | Open Prisma Studio |
+| Script               | Description                                    |
+| -------------------- | ---------------------------------------------- |
+| `npm run dev`        | Start dev server (webpack mode)                |
+| `npm run build`      | Build for production                           |
+| `npm run start`      | Start production server                        |
+| `npm run db:push`    | Push schema to database (no migration history) |
+| `npm run db:migrate` | Run pending migrations                         |
+| `npm run db:seed`    | Seed demo data                                 |
+| `npm run db:reset`   | Wipe and re-seed the database                  |
+| `npm run db:studio`  | Open Prisma Studio                             |
 
 ---
 
