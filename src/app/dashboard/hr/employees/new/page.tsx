@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getDepartments, getPositions } from "@/actions/hr";
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { NewEmployeeForm } from "@/components/hr/new-employee-form";
+import { auth } from "@/auth";
 
 export default async function NewEmployeePage() {
+  const session = await auth();
+  if (session?.user.role === "DEMO") redirect("/dashboard/hr/employees");
+
   const [departments, positions] = await Promise.all([getDepartments(), getPositions()]);
 
   return (
