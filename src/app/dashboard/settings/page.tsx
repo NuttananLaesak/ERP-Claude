@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { ProfileForm } from "@/components/settings/profile-form";
+import { ChangePasswordForm } from "@/components/settings/change-password-form";
 import { GlowCard } from "@/components/ui/glow-card";
 
 function Divider() {
@@ -105,6 +106,20 @@ export default async function SettingsPage() {
             >
               <GlowCard>
                 <ProfileForm user={user} />
+              </GlowCard>
+            </Section>
+          </AnimatedSection>
+
+          <Divider />
+
+          {/* Security */}
+          <AnimatedSection delay={0.17}>
+            <Section
+              title="Security"
+              description="Update your password to keep your account safe."
+            >
+              <GlowCard>
+                <ChangePasswordForm />
               </GlowCard>
             </Section>
           </AnimatedSection>
