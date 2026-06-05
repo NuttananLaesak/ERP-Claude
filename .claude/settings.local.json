@@ -32,7 +32,12 @@
       "Bash(git -C /mnt/d/myProject/my-web commit -m ' *)",
       "Bash(git -C /mnt/d/myProject/my-web add src/lib/db.ts)",
       "Bash(git *)",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(npm list *)",
+      "Bash(npx prisma *)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes, reset the database\" npx prisma *)",
+      "Bash(tsx *)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"update seed all user and 3employee password is password123 then remove all table in db then migrate then seed\" npx prisma *)"
     ]
   }
 }
