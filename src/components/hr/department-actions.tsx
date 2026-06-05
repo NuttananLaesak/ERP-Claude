@@ -26,13 +26,13 @@ export function DepartmentActions() {
     <form action={action} className="space-y-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5">
       <h2 className="text-sm font-semibold text-white/70">New Department</h2>
 
-      {state?.error && (
+      {state && "error" in state && (
         <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           {state.error}
         </div>
       )}
 
-      {state?.success && (
+      {state && "success" in state && (
         <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
           Department created
         </div>

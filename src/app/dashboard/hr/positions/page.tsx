@@ -2,9 +2,11 @@ import Link from "next/link";
 import { getPositions, deletePosition } from "@/actions/hr";
 import { AnimatedSection } from "@/components/animated/animated-section";
 import { PositionActions } from "@/components/hr/position-actions";
+import { auth } from "@/auth";
 
 export default async function PositionsPage() {
-  const positions = await getPositions();
+  const [positions, session] = await Promise.all([getPositions(), auth()]);
+  const isDemo = session?.user.role === "DEMO";
 
   return (
     <div className="relative min-h-screen p-6 pt-16 md:p-8 md:pt-8">
@@ -27,10 +29,12 @@ export default async function PositionsPage() {
           </div>
         </AnimatedSection>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <AnimatedSection delay={0.05}>
-            <PositionActions />
-          </AnimatedSection>
+        <div className={`grid gap-6 ${!isDemo ? "md:grid-cols-2" : ""}`}>
+          {!isDemo && (
+            <AnimatedSection delay={0.05}>
+              <PositionActions />
+            </AnimatedSection>
+          )}
 
           <AnimatedSection delay={0.1}>
             <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03]">
@@ -52,14 +56,16 @@ export default async function PositionsPage() {
                           {pos._count.employees} {pos._count.employees === 1 ? "employee" : "employees"}
                         </p>
                       </div>
-                      <form action={deletePosition.bind(null, pos.id)}>
-                        <button
-                          type="submit"
-                          className="rounded-lg px-2 py-1 text-xs text-red-400 opacity-0 transition-opacity hover:bg-red-500/10 group-hover:opacity-100"
-                        >
-                          Delete
-                        </button>
-                      </form>
+                      {!isDemo && (
+                        <form action={deletePosition.bind(null, pos.id)}>
+                          <button
+                            type="submit"
+                            className="rounded-lg px-2 py-1 text-xs text-red-400 opacity-0 transition-opacity hover:bg-red-500/10 group-hover:opacity-100"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      )}
                     </div>
                   ))}
                 </div>

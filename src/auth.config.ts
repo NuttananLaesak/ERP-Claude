@@ -14,7 +14,7 @@ export const authConfig = {
     },
     async session({ session, token }) {
       if (token.id) session.user.id = token.id as string;
-      if (token.role) session.user.role = token.role as "ADMIN" | "EMPLOYEE";
+      if (token.role) session.user.role = token.role as "ADMIN" | "DEMO" | "EMPLOYEE";
       return session;
     },
   },

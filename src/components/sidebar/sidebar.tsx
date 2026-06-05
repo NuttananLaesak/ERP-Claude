@@ -128,7 +128,7 @@ const employeeNavGroups: NavGroup[] = [
   },
 ];
 
-export default function Sidebar({ role }: { role?: "ADMIN" | "EMPLOYEE" }) {
+export default function Sidebar({ role }: { role?: "ADMIN" | "DEMO" | "EMPLOYEE" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const navGroups = role === "EMPLOYEE" ? employeeNavGroups : adminNavGroups;

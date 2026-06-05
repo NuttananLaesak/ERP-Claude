@@ -67,8 +67,8 @@ const EMPLOYEES: Array<{
 // ── Login users ───────────────────────────────────────────────────────────────
 
 const USERS = [
-  { name: "Admin User", email: "admin@company.com", password: "password123" },
-  { name: "Demo User",  email: "demo@company.com",  password: "password123" },
+  { name: "Admin User", email: "admin@company.com", password: "password123", role: "ADMIN" as const },
+  { name: "Demo User",  email: "demo@company.com",  password: "password123", role: "DEMO"  as const },
 ];
 
 // ── Seed ──────────────────────────────────────────────────────────────────────
@@ -91,12 +91,12 @@ async function seed() {
     const exists = await (prisma as any).user.findUnique({ where: { email: u.email } });
     if (!exists) {
       await (prisma as any).user.create({
-        data: { name: u.name, email: u.email, password: await bcrypt.hash(u.password, 12), role: "ADMIN" },
+        data: { name: u.name, email: u.email, password: await bcrypt.hash(u.password, 12), role: u.role },
       });
-      console.log(`  ✓ user: ${u.email}`);
+      console.log(`  ✓ user: ${u.email} (${u.role})`);
     } else {
-      await (prisma as any).user.update({ where: { email: u.email }, data: { role: "ADMIN" } });
-      console.log(`  – upsert user: ${u.email} (ensured ADMIN)`);
+      await (prisma as any).user.update({ where: { email: u.email }, data: { role: u.role } });
+      console.log(`  – upsert user: ${u.email} (ensured ${u.role})`);
     }
   }
 

@@ -8,9 +8,11 @@ import { AnimatedSection } from "@/components/animated/animated-section";
 import { StatusBadge } from "@/components/hr/status-badge";
 import { EmployeeAvatar } from "@/components/hr/employee-avatar";
 import { PageGlow } from "@/components/ui/page-glow";
+import { auth } from "@/auth";
 
 export default async function EmployeesPage() {
-  const employees = await getEmployees();
+  const [employees, session] = await Promise.all([getEmployees(), auth()]);
+  const isDemo = session?.user.role === "DEMO";
 
   return (
     <div className="relative min-h-screen p-6 pt-16 md:p-8 md:pt-8">
@@ -34,12 +36,14 @@ export default async function EmployeesPage() {
                 {employees.length} total
               </p>
             </div>
-            <Link
-              href="/dashboard/hr/employees/new"
-              className="rounded-xl bg-indigo-500/20 px-4 py-2 text-sm font-medium text-indigo-300 transition-colors hover:bg-indigo-500/30"
-            >
-              + Add Employee
-            </Link>
+            {!isDemo && (
+              <Link
+                href="/dashboard/hr/employees/new"
+                className="rounded-xl bg-indigo-500/20 px-4 py-2 text-sm font-medium text-indigo-300 transition-colors hover:bg-indigo-500/30"
+              >
+                + Add Employee
+              </Link>
+            )}
           </div>
         </AnimatedSection>
 
@@ -116,44 +120,46 @@ export default async function EmployeesPage() {
                           })}
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                            {emp.status !== "ACTIVE" && (
-                              <form
-                                action={updateEmployeeStatus.bind(
-                                  null,
-                                  emp.id,
-                                  "ACTIVE",
-                                )}
-                              >
-                                <button
-                                  type="submit"
-                                  className="rounded-lg px-2 py-1 text-xs text-emerald-400 hover:bg-emerald-500/10"
+                          {!isDemo && (
+                            <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                              {emp.status !== "ACTIVE" && (
+                                <form
+                                  action={updateEmployeeStatus.bind(
+                                    null,
+                                    emp.id,
+                                    "ACTIVE",
+                                  )}
                                 >
-                                  Activate
-                                </button>
-                              </form>
-                            )}
-                            {emp.status !== "ON_LEAVE" && (
-                              <form
-                                action={updateEmployeeStatus.bind(
-                                  null,
-                                  emp.id,
-                                  "ON_LEAVE",
-                                )}
-                              >
-                                <button
-                                  type="submit"
-                                  className="rounded-lg px-2 py-1 text-xs text-amber-400 hover:bg-amber-500/10"
+                                  <button
+                                    type="submit"
+                                    className="rounded-lg px-2 py-1 text-xs text-emerald-400 hover:bg-emerald-500/10"
+                                  >
+                                    Activate
+                                  </button>
+                                </form>
+                              )}
+                              {emp.status !== "ON_LEAVE" && (
+                                <form
+                                  action={updateEmployeeStatus.bind(
+                                    null,
+                                    emp.id,
+                                    "ON_LEAVE",
+                                  )}
                                 >
-                                  Leave
-                                </button>
-                              </form>
-                            )}
-                            <DeleteEmployeeButton
-                              id={emp.id}
-                              className="rounded-lg px-2 py-1 text-xs text-red-400 hover:bg-red-500/10 disabled:opacity-50"
-                            />
-                          </div>
+                                  <button
+                                    type="submit"
+                                    className="rounded-lg px-2 py-1 text-xs text-amber-400 hover:bg-amber-500/10"
+                                  >
+                                    Leave
+                                  </button>
+                                </form>
+                              )}
+                              <DeleteEmployeeButton
+                                id={emp.id}
+                                className="rounded-lg px-2 py-1 text-xs text-red-400 hover:bg-red-500/10 disabled:opacity-50"
+                              />
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}

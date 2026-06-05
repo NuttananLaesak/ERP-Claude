@@ -13,6 +13,7 @@ import { CreateLoginButton } from "@/components/hr/create-login-button";
 import { StatusBadge } from "@/components/hr/status-badge";
 import { EmployeeAvatar } from "@/components/hr/employee-avatar";
 import { PageGlow } from "@/components/ui/page-glow";
+import { auth } from "@/auth";
 
 export default async function EmployeeDetailPage({
   params,
@@ -20,11 +21,13 @@ export default async function EmployeeDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [employee, departments, positions] = await Promise.all([
+  const [employee, departments, positions, session] = await Promise.all([
     getEmployee(id),
     getDepartments(),
     getPositions(),
+    auth(),
   ]);
+  const isDemo = session?.user.role === "DEMO";
   if (!employee) notFound();
 
   const hireDate = new Date(employee.hireDate);
@@ -75,60 +78,62 @@ export default async function EmployeeDetailPage({
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                {employee.status !== "ACTIVE" && (
-                  <form
-                    action={updateEmployeeStatus.bind(
-                      null,
-                      employee.id,
-                      "ACTIVE",
-                    )}
-                  >
-                    <button
-                      type="submit"
-                      className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20"
+              {!isDemo && (
+                <div className="flex items-center gap-2">
+                  {employee.status !== "ACTIVE" && (
+                    <form
+                      action={updateEmployeeStatus.bind(
+                        null,
+                        employee.id,
+                        "ACTIVE",
+                      )}
                     >
-                      Set Active
-                    </button>
-                  </form>
-                )}
-                {employee.status !== "ON_LEAVE" && (
-                  <form
-                    action={updateEmployeeStatus.bind(
-                      null,
-                      employee.id,
-                      "ON_LEAVE",
-                    )}
-                  >
-                    <button
-                      type="submit"
-                      className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-400 hover:bg-amber-500/20"
+                      <button
+                        type="submit"
+                        className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20"
+                      >
+                        Set Active
+                      </button>
+                    </form>
+                  )}
+                  {employee.status !== "ON_LEAVE" && (
+                    <form
+                      action={updateEmployeeStatus.bind(
+                        null,
+                        employee.id,
+                        "ON_LEAVE",
+                      )}
                     >
-                      Set Leave
-                    </button>
-                  </form>
-                )}
-                {employee.status !== "INACTIVE" && (
-                  <form
-                    action={updateEmployeeStatus.bind(
-                      null,
-                      employee.id,
-                      "INACTIVE",
-                    )}
-                  >
-                    <button
-                      type="submit"
-                      className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/40 hover:bg-white/[0.07]"
+                      <button
+                        type="submit"
+                        className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-1.5 text-xs font-medium text-amber-400 hover:bg-amber-500/20"
+                      >
+                        Set Leave
+                      </button>
+                    </form>
+                  )}
+                  {employee.status !== "INACTIVE" && (
+                    <form
+                      action={updateEmployeeStatus.bind(
+                        null,
+                        employee.id,
+                        "INACTIVE",
+                      )}
                     >
-                      Deactivate
-                    </button>
-                  </form>
-                )}
-                <DeleteEmployeeButton
-                  id={employee.id}
-                  className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/20 disabled:opacity-50"
-                />
-              </div>
+                      <button
+                        type="submit"
+                        className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/40 hover:bg-white/[0.07]"
+                      >
+                        Deactivate
+                      </button>
+                    </form>
+                  )}
+                  <DeleteEmployeeButton
+                    id={employee.id}
+                    className="rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-500/20 disabled:opacity-50"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </AnimatedSection>
@@ -203,6 +208,8 @@ export default async function EmployeeDetailPage({
                   Employee can log in with their email
                 </span>
               </div>
+            ) : isDemo ? (
+              <p className="text-xs text-white/40">No login account yet.</p>
             ) : (
               <div className="space-y-2">
                 <p className="text-xs text-white/40">
@@ -215,14 +222,16 @@ export default async function EmployeeDetailPage({
           </div>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.12}>
-          <p className="mb-3 text-xs font-medium text-white/35">Edit Details</p>
-          <EditEmployeeForm
-            employee={employee}
-            departments={departments}
-            positions={positions}
-          />
-        </AnimatedSection>
+        {!isDemo && (
+          <AnimatedSection delay={0.12}>
+            <p className="mb-3 text-xs font-medium text-white/35">Edit Details</p>
+            <EditEmployeeForm
+              employee={employee}
+              departments={departments}
+              positions={positions}
+            />
+          </AnimatedSection>
+        )}
       </div>
     </div>
   );

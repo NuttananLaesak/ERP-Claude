@@ -5,6 +5,13 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+
+async function requireAdmin() {
+  const session = await auth();
+  if (session?.user.role === "DEMO") return { error: "Demo account — read-only access" };
+  return null;
+}
 
 // ── Departments ───────────────────────────────────────────────────────────────
 
@@ -14,6 +21,8 @@ const deptSchema = z.object({
 });
 
 export async function createDepartment(_: unknown, formData: FormData) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   const parsed = deptSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description") || undefined,
@@ -29,6 +38,7 @@ export async function createDepartment(_: unknown, formData: FormData) {
 }
 
 export async function deleteDepartment(id: string): Promise<void> {
+  if (await requireAdmin()) return;
   const count = await db.employee.count({ where: { departmentId: id } });
   if (count > 0) return;
   await db.department.delete({ where: { id } });
@@ -51,6 +61,8 @@ const positionSchema = z.object({
 });
 
 export async function createPosition(_: unknown, formData: FormData) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   const parsed = positionSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description") || undefined,
@@ -66,6 +78,7 @@ export async function createPosition(_: unknown, formData: FormData) {
 }
 
 export async function deletePosition(id: string): Promise<void> {
+  if (await requireAdmin()) return;
   const count = await db.employee.count({ where: { positionId: id } });
   if (count > 0) return;
   await db.position.delete({ where: { id } });
@@ -100,6 +113,8 @@ function generateEmployeeId(): string {
 }
 
 export async function createEmployee(_: unknown, formData: FormData) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   const parsed = employeeSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
@@ -146,6 +161,8 @@ export async function createEmployee(_: unknown, formData: FormData) {
 }
 
 export async function updateEmployee(id: string, _: unknown, formData: FormData) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   const parsed = employeeSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),
@@ -179,12 +196,14 @@ export async function updateEmployee(id: string, _: unknown, formData: FormData)
 }
 
 export async function updateEmployeeStatus(id: string, status: "ACTIVE" | "INACTIVE" | "ON_LEAVE"): Promise<void> {
+  if (await requireAdmin()) return;
   await db.employee.update({ where: { id }, data: { status } });
   revalidatePath("/dashboard/hr/employees");
   revalidatePath("/dashboard/hr");
 }
 
 export async function deleteEmployee(id: string): Promise<void> {
+  if (await requireAdmin()) return;
   const employee = await db.employee.findUnique({ where: { id }, select: { userId: true } });
   await db.employee.delete({ where: { id } });
   if (employee?.userId) await db.user.delete({ where: { id: employee.userId } });
@@ -236,6 +255,8 @@ export async function getHrStats() {
 }
 
 export async function createEmployeeLogin(id: string) {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   const emp = await db.employee.findUnique({ where: { id } });
   if (!emp) return { error: "Employee not found" };
   if (emp.userId) return { error: "Login already exists" };
