@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 import { ProfileForm } from "@/components/settings/profile-form";
 import { GlowCard } from "@/components/ui/glow-card";
 

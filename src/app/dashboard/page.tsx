@@ -1,6 +1,6 @@
-import { AnimatedStats } from "@/components/dashboard/animated-stats";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
-import { DashboardGrid } from "@/components/dashboard/dashboard-grid";
+import { AnimatedStats } from "@/components/animated/animated-stats";
+import { AnimatedSection } from "@/components/animated/animated-section";
+import { DashboardGrid } from "@/components/grid/grid";
 
 export default function DashboardPage() {
   return (

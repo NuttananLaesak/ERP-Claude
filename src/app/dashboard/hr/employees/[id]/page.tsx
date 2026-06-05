@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEmployee, getDepartments, getPositions, deleteEmployee, updateEmployeeStatus } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 import { EditEmployeeForm } from "@/components/hr/edit-employee-form";
 import { CreateLoginButton } from "@/components/hr/create-login-button";
 

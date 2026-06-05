@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getHrStats, getEmployees } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 
 export default async function HrPage() {
   const [stats, employees] = await Promise.all([getHrStats(), getEmployees()]);

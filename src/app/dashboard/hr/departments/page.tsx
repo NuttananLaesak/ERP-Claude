@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getDepartments, deleteDepartment } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 import { DepartmentActions } from "@/components/hr/department-actions";
 
 export default async function DepartmentsPage() {

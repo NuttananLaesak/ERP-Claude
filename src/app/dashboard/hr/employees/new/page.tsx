@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getDepartments, getPositions } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 import { NewEmployeeForm } from "@/components/hr/new-employee-form";
 
 export default async function NewEmployeePage() {

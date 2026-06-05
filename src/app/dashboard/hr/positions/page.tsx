@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getPositions, deletePosition } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 import { PositionActions } from "@/components/hr/position-actions";
 
 export default async function PositionsPage() {

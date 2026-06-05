@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getEmployees, deleteEmployee, updateEmployeeStatus } from "@/actions/hr";
-import { AnimatedSection } from "@/components/dashboard/animated-section";
+import { AnimatedSection } from "@/components/animated/animated-section";
 
 const statusColors: Record<string, string> = {
   ACTIVE: "bg-emerald-500/15 text-emerald-400",
